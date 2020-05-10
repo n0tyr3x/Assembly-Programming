@@ -1,0 +1,31 @@
+
+Code:
+section .text
+global _start
+_start:
+mov EDX,len
+mov ECX,msg
+mov EBX,1
+mov EAX,4
+int 0x80
+mov EAX,1
+int 0x80
+section .data
+msg db ‘Hello, Universe!!!!!’, 0xa
+len EQU $ — msg
+===================================
+
+Code with explanation:
+section .text ; The text section is used for keeping the actual code
+global _start ; tells the kernel where the program execution begins
+_start: ; Starting of code execution
+mov EDX,len ; Move the value ‘len’ to 32-Bit Register EDX
+mov ECX,msg ; Move the value ‘msg’ to 32-Bit Register ECX
+mov EBX,1 ; Move the value 1 to EBX 32 Bit Register which indicates number of the file descriptor stdout, the standard output, or in other words — printing to the screen.
+mov EAX,4 ; Put the system call sys_write() number 4, in the EAX register.
+int 0x80 ; invoke system calls in Linux on x86 kernel (i.e., Intel-compatible) processors
+mov EAX,1 ; move the value 1 to EAX 32 bit Register which is the system call number for exiting from the program
+int 0x80 ; invoke system calls in Linux on x86 kernel (i.e., Intel-compatible) processors
+section .data ; Declaring initialized data or constants. This data does not change at runtime.
+msg db ‘Hello, Universe!!!!!’, 0xa ; Declare an uninitialized byte using Data directive DB, referred to a location and labeled with ‘msg’ and 0xA is new line
+len EQU $ — msg ; EQU directive is used for defining constant of the value of ‘msg’ to the variable ‘len’
